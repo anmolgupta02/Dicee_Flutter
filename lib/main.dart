@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,13 +12,26 @@ void main() {
           title: Text('Dicee'),
           backgroundColor: Colors.blue.shade500,
         ),
-        body: DicePage(),
+        body: DicePageFul(),
       ),
     ),
   );
 }
 
-class DicePage extends StatelessWidget {
+class DicePageFul extends StatefulWidget {
+  @override
+  _DicePageFulState createState() => _DicePageFulState();
+}
+
+class _DicePageFulState extends State<DicePageFul> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 2;
+
+  void changeNum() {
+    leftDiceNumber = Random().nextInt(6) + 1;
+    rightDiceNumber = Random().nextInt(6) + 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -26,9 +41,12 @@ class DicePage extends StatelessWidget {
           Expanded(
               child: FlatButton(
             onPressed: () {
+              setState(() {
+                changeNum();
+              });
               print('Left Button Got Clicked');
             },
-            child: Image.asset('images/dice2.png'),
+            child: Image.asset('images/dice$leftDiceNumber.png'),
           )
 //          Image(
 //            image: AssetImage('images/dice1.png'),
@@ -37,10 +55,50 @@ class DicePage extends StatelessWidget {
           Expanded(
             child: FlatButton(
               onPressed: () {
+                setState(() {
+                  changeNum();
+                });
                 print('Right Button Got Clicked');
               },
               child: Image(
-                image: AssetImage('images/dice1.png'),
+                image: AssetImage('images/dice$rightDiceNumber.png'),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class DicePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var leftDiceNumber = '5';
+    dynamic rightDiceNumber = '4';
+
+    return Center(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+              child: FlatButton(
+                onPressed: () {
+                  print('Left Button Got Clicked');
+                },
+                child: Image.asset('images/dice$leftDiceNumber.png'),
+              )
+//          Image(
+//            image: AssetImage('images/dice1.png'),
+//          ),
+          ),
+          Expanded(
+            child: FlatButton(
+              onPressed: () {
+                print('Right Button Got Clicked');
+              },
+              child: Image(
+                image: AssetImage('images/dice$rightDiceNumber.png'),
               ),
             ),
           )
